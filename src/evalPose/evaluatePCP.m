@@ -1,7 +1,7 @@
 % implementation of strict PCP measure,
 % as defined in [Ferrari et al., CVPR'08]
 
-name = 'CPM';
+name = '   ';
 
 bSave = true;
 range = 0.5;

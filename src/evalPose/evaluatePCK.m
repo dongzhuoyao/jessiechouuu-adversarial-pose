@@ -48,7 +48,7 @@ for i = 1:length(predidxs);
     
     auc = area_under_curve(scale01(range),pck(:,end));
 %     plot(range,pck(:,end),'color',p.colorName,'LineStyle','-','LineWidth',3);
-    fprintf('%s, AUC: %1.1f\n',p.name,auc);
+    fprintf('AUC: %1.1f\n',auc);
 end
 
 if (bSave)

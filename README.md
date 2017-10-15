@@ -19,22 +19,31 @@ A model trained on MPII and LSP dataset is available [here](https://drive.google
 
 Run the model on LSP test set and see the PCK and PCP scores. Prediction will be saved in `src/evalPose/prediction`
 ```
-$th main.lua -finalPredictions -nEpochs 0 -loadModel /path/to/model
+$ th main.lua -finalPredictions -nEpochs 0 -loadModel /path/to/model
 ```
 
 ## Training
 
+# Pipeline
+![](https://github.com/jessiechouuu/adversarial-pose/blob/master/figure/pipeline.png?raw=true)
+
 Train your model with MPII and LSP training data
 ```
-$th main.lua -expID exp1
+$ th main.lua -expID exp1
 ```
 then the models will be saved in `exp/LSP/exp1`.
 
+You can add the options such as `-initial_Kt 0.5`, `-lambda_G 0.01`, etc.
+More options can be found in `src/opts.lua`
+
+Check out the fantastic [repo](https://github.com/anewell/pose-hg-train) of "Stacked Hourglass Network" for some advanced usage of this code.
+For example, continue previous experiment with the same or different setting.
 
 ## TODO
-![](https://github.com/jessiechouuu/adversarial-pose/blob/master/figure/pipeline.png?raw=true)
 - demo code for running on single image
+- LIP annotations file
 
 ## Acknowledgements
 
-This code is heavily built on [pose-hg-train](https://github.com/anewell/pose-hg-train)
+Thanks for the open source from Alejandro Newell,
+this code is heavily built on his repo [pose-hg-train](https://github.com/anewell/pose-hg-train)
