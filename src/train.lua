@@ -41,13 +41,6 @@ function step(tag)
     for i,sample in loader[set]:run() do
         xlua.progress(i, nIters)
         local input, label, indices = unpack(sample)
-        
-        -- visualize
-        --[[image.save('1.jpg', input[1])
-        for j=1,16 do
-            image.save('2.jpg', torch.mul(input[1][1],0.5):add(image.scale(label[1][1][j],256)))
-            io.read()
-        end]]
 
         local sInput = image.scale(input:view(opt[set .. 'Batch']*3, opt.inputRes,opt.inputRes), opt.outputRes)
                                         :view(opt[set .. 'Batch'], 3, opt.outputRes, opt.outputRes)
@@ -106,7 +99,7 @@ function step(tag)
             
             -- avg for log
             avgG1 = avgG1 + err_G1 / nIters
-            avgG2 = avgG2 + err_G2 / nIters
+            avgG2 = avgG2 + err_G2 / opt.lambda_G / nIters
             avgD_real = avgD_real + errD_real / nIters
             avgD_fake = avgD_fake + errD_fake / nIters
             
@@ -147,13 +140,13 @@ function step(tag)
 
     -- Print and log some useful metrics
     if tag == 'train' then
-        print(string.format("      %s : Acc: %.4f avgG1: %.4f avgG2: %.4f avgD_real: %.4f avgD_fake: %.4f measure: %.4f k_t: %.4f"  
-                                    % {set, avgAcc, avgG1, avgG2, avgD_real, avgD_fake, measure, k_t}))
+        print(string.format("      %s : Acc: %.4f avgG1: %.4f avgG2: %.4f avgD_real: %.4f measure: %.4f k_t: %.4f"  
+                                    % {set, avgAcc, avgG1, avgG2, avgD_real, measure, k_t}))
         if ref.log[set] then
             table.insert(opt.acc[set], avgAcc)
             ref.log[set]:add{
                 ['epoch     '] = string.format("%d" % epoch),
-                ['loss      '] = string.format("%.6f" % avgLoss),
+                ['loss      '] = string.format("%.6f" % avgG1),
                 ['acc       '] = string.format("%.4f" % avgAcc),
                 ['LR        '] = string.format("%g" % optimState.learningRate)
             }
