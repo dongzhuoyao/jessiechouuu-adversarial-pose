@@ -32,7 +32,7 @@ then the models will be saved in `exp/LSP/exp1`.
 
 
 ## TODO
-
+![](https://github.com/jessiechouuu/adversarial-pose/blob/master/figure/pipeline.png?raw=true)
 - demo code for running on single image
 
 ## Acknowledgements
