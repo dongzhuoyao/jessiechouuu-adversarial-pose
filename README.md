@@ -24,7 +24,7 @@ $ th main.lua -finalPredictions -nEpochs 0 -loadModel /path/to/model
 
 ## Training
 
-# Pipeline
+### Pipeline
 ![](https://github.com/jessiechouuu/adversarial-pose/blob/master/figure/pipeline.png?raw=true)
 
 Train your model with MPII and LSP training data
