@@ -17,16 +17,23 @@ A model trained on MPII and LSP dataset is available [here](https://drive.google
 
 ## Testing
 
-Run the model on LSP test set and see the scores. Prediction will be saved in `evalPose/prediction`
+Run the model on LSP test set and see the PCK and PCP scores. Prediction will be saved in `src/evalPose/prediction`
 ```
-$th main.lua -finalPredictions -nEpochs 0 -loadModel /path/to/model`
+$th main.lua -finalPredictions -nEpochs 0 -loadModel /path/to/model
 ```
 
 ## Training
 
+Train your model with MPII and LSP training data
+```
+$th main.lua -expID exp1
+```
+then the models will be saved in `exp/LSP/exp1`.
+
+
 ## TODO
 
-- demo code to run single image
+- demo code for running on single image
 
 ## Acknowledgements
 
