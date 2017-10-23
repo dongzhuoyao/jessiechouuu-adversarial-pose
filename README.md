@@ -39,10 +39,6 @@ More options can be found in `src/opts.lua`
 Check out the fantastic [repo](https://github.com/anewell/pose-hg-train) of "Stacked Hourglass Network" for some advanced usage of this code.
 For example, continue previous experiment with the same or different settings.
 
-## TODO
-- demo code for running on single image
-- LIP annotations file
-
 ## Acknowledgements
 
 Thanks for the open source from Alejandro Newell,
