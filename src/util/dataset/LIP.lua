@@ -14,39 +14,33 @@ function Dataset:__init()
 
     local annot = {}
     local tags = {'imgname','part','center','scale','visible','istrain'}
-    local a = hdf5.open('../data/LIP/lip.h5'),'r')
+    local a = hdf5.open('../data/LIP/annotations/lip.h5','r')
     for _,tag in ipairs(tags) do 
       annot[tag] = a:read(tag):all() 
     end
     a:close()
-    annot.center:add(1)
 
     -- Index reference
     if not opt.idxRef then
-        local allIdxs = torch.range(1,annot.index:size(1))
+        local allIdxs = torch.range(1,annot.istrain:size(1))
         opt.idxRef = {}
+        opt.idxRef.train = allIdxs[annot.istrain:eq(1)]
         opt.idxRef.valid = allIdxs[annot.istrain:eq(2)]
-        opt.idxRef.train = allIdxs--[annot.istrain:eq(1)]
-
-        -- Set up training/validation split
-        --local perm = torch.randperm(opt.idxRef.train:size(1)):long()
-        --opt.idxRef.valid = opt.idxRef.train:index(1, perm:sub(1,opt.nValidImgs))
-        --opt.idxRef.train = opt.idxRef.train:index(1, perm:sub(opt.nValidImgs+1,-1))
+        opt.idxRef.test = allIdxs[annot.istrain:eq(0)]
 
         torch.save(opt.save .. '/options.t7', opt)
     end
 
     self.annot = annot
     self.nsamples = {train=opt.idxRef.train:numel(),
-                     --valid=opt.idxRef.valid:numel(),
-                     valid=opt.idxRef.valid:numel()
-                     }
-
-    -- For final predictions
-    opt.validIters = self.nsamples.valid
-    opt.validBatch = 1
+                     valid=opt.idxRef.valid:numel(),
+                     test=opt.idxRef.test:numel()}
     
     print(self.nsamples)
+
+    -- For final predictions
+    opt.testIters = self.nsamples.test
+    opt.testBatch = 1
 end
 
 function Dataset:size(set)
@@ -56,11 +50,7 @@ end
 function Dataset:getPath(idx)
     local filename = ffi.string(self.annot.imgname[idx]:char():data())
     filename = string.split(filename,'*')[1]
-    if self.annot.istrain[idx]==1 then
-        return paths.concat(projectDir .. '/data','LIP','train_images',filename)
-    else
-        return paths.concat(projectDir .. '/data','LIP','val_images',filename)
-    end
+    return paths.concat(projectDir .. '/data','LIP',filename)
 end
 
 function Dataset:loadImage(idx)
@@ -71,7 +61,6 @@ function Dataset:getPartInfo(idx)
     local pts = self.annot.part[idx]:clone()
     local c = self.annot.center[idx]:clone()
     local s = self.annot.scale[idx]
-    -- Small adjustment so cropping is less likely to take feet out
     s = s * 1.8
     return pts, c, s
 end

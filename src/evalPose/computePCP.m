@@ -14,7 +14,7 @@ for jidx = 1:size(dist,2)/2
         matches(jidx,:) = match;
     end
 end
-save('matches.mat','matches');
+% save('matches.mat','matches');
 
 % compute average PCP
 for k = 1:numel(range)

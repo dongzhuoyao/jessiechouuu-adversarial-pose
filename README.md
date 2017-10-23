@@ -1,6 +1,6 @@
 # Self Adversarial Training for Human Pose Estimation
 
-Chia-Jung Chou, Jui-Ting Chien, Hwann-Tzong Chen, Self Adversarial Training for Human Pose Estimation, [arXiv:1707.02439](http://arxiv.org/abs/1603.06937)
+Chia-Jung Chou, Jui-Ting Chien, Hwann-Tzong Chen, Self Adversarial Training for Human Pose Estimation, [arXiv:1707.02439](https://arxiv.org/abs/1707.02439)
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ You can add the options such as `-initial_Kt 0.5`, `-lambda_G 0.01`, etc.
 More options can be found in `src/opts.lua`
 
 Check out the fantastic [repo](https://github.com/anewell/pose-hg-train) of "Stacked Hourglass Network" for some advanced usage of this code.
-For example, continue previous experiment with the same or different setting.
+For example, continue previous experiment with the same or different settings.
 
 ## TODO
 - demo code for running on single image
